@@ -8,241 +8,244 @@ import org.scalatest.{MustMatchers, WordSpecLike}
 
 class MotionServiceTest extends MustMatchers with WordSpecLike {
 
-  "makeAMotion" should {
+  "MotionService" should {
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to forward and " +
-      "- The current orientation is North " +
-      "Then it must return a new position with the same orientation and Y coordinate sums one" in {
+    "makeAMotion" should {
 
-      val requiredMotion = Motion( 'A' )
-      val currentPosition = Position( x = 1, y = 5, NORTH )
-      val expectedPosition = Position( x = 1, y = 6, NORTH )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to forward and " +
+        "- The current orientation is North " +
+        "Then it must return a new position with the same orientation and Y coordinate sums one" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'A' )
+        val currentPosition = Position( x = 1, y = 5, NORTH )
+        val expectedPosition = Position( x = 1, y = 6, NORTH )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to forward and " +
-      "- The current orientation is East " +
-      "Then it must return a new position with the same orientation and X coordinate sums one" in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'A' )
-      val currentPosition = Position( x = 1, y = 5, EAST )
-      val expectedPosition = Position( x = 2, y = 5, EAST )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to forward and " +
+        "- The current orientation is East " +
+        "Then it must return a new position with the same orientation and X coordinate sums one" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'A' )
+        val currentPosition = Position( x = 1, y = 5, EAST )
+        val expectedPosition = Position( x = 2, y = 5, EAST )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to forward and " +
-      "- The current orientation is South " +
-      "Then it must return a new position with the same orientation and Y coordinate subtracts one" in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'A' )
-      val currentPosition = Position( x = 1, y = 5, SOUTH )
-      val expectedPosition = Position( x = 1, y = 4, SOUTH )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to forward and " +
+        "- The current orientation is South " +
+        "Then it must return a new position with the same orientation and Y coordinate subtracts one" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'A' )
+        val currentPosition = Position( x = 1, y = 5, SOUTH )
+        val expectedPosition = Position( x = 1, y = 4, SOUTH )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to forward and " +
-      "- The current orientation is West " +
-      "Then it must return a new position with the same orientation and X coordinate subtracts one" in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'A' )
-      val currentPosition = Position( x = 1, y = 5, WEST )
-      val expectedPosition = Position( x = 0, y = 5, WEST )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to forward and " +
+        "- The current orientation is West " +
+        "Then it must return a new position with the same orientation and X coordinate subtracts one" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'A' )
+        val currentPosition = Position( x = 1, y = 5, WEST )
+        val expectedPosition = Position( x = 0, y = 5, WEST )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to forward and " +
-      "- The current orientation is invalid " +
-      "Then it must return an Error " in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'A' )
-      val currentPosition = Position( x = 1, y = 5, INVALID_ORIENTATION )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to forward and " +
+        "- The current orientation is invalid " +
+        "Then it must return an Error " in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'A' )
+        val currentPosition = Position( x = 1, y = 5, INVALID_ORIENTATION )
 
-      result mustBe ErrorMessage("La orientación no está definida y por lo tanto, no es posible mover el dron hacia adelante").asLeft
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to right and " +
-      "- The current orientation is North " +
-      "Then it must return a new position with East orientation" in {
+        result mustBe ErrorMessage("La orientación no está definida y por lo tanto, no es posible mover el dron hacia adelante").asLeft
+      }
 
-      val requiredMotion = Motion( 'D' )
-      val currentPosition = Position( x = 2, y = 5, NORTH )
-      val expectedPosition = Position( x = 2, y = 5, EAST )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to right and " +
+        "- The current orientation is North " +
+        "Then it must return a new position with East orientation" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'D' )
+        val currentPosition = Position( x = 2, y = 5, NORTH )
+        val expectedPosition = Position( x = 2, y = 5, EAST )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to right and " +
-      "- The current orientation is East " +
-      "Then it must return a new position with South orientation" in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'D' )
-      val currentPosition = Position( x = 1, y = 5, EAST )
-      val expectedPosition = Position( x = 1, y = 5, SOUTH )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to right and " +
+        "- The current orientation is East " +
+        "Then it must return a new position with South orientation" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'D' )
+        val currentPosition = Position( x = 1, y = 5, EAST )
+        val expectedPosition = Position( x = 1, y = 5, SOUTH )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to right and " +
-      "- The current orientation is South " +
-      "Then it must return a new position with West orientation" in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'D' )
-      val currentPosition = Position( x = 1, y = 5, SOUTH )
-      val expectedPosition = Position( x = 1, y = 5, WEST )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to right and " +
+        "- The current orientation is South " +
+        "Then it must return a new position with West orientation" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'D' )
+        val currentPosition = Position( x = 1, y = 5, SOUTH )
+        val expectedPosition = Position( x = 1, y = 5, WEST )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to right and " +
-      "- The current orientation is West " +
-      "Then it must return a new position with North orientation" in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'D' )
-      val currentPosition = Position( x = 1, y = 5, WEST )
-      val expectedPosition = Position( x = 1, y = 5, NORTH )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to right and " +
+        "- The current orientation is West " +
+        "Then it must return a new position with North orientation" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'D' )
+        val currentPosition = Position( x = 1, y = 5, WEST )
+        val expectedPosition = Position( x = 1, y = 5, NORTH )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to right and " +
-      "- The current orientation is invalid " +
-      "Then it must return an Error " in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'D' )
-      val currentPosition = Position( x = 1, y = 5, INVALID_ORIENTATION )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to right and " +
+        "- The current orientation is invalid " +
+        "Then it must return an Error " in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'D' )
+        val currentPosition = Position( x = 1, y = 5, INVALID_ORIENTATION )
 
-      result mustBe ErrorMessage("La orientación actual para realizar un giro a la derecha no está definida").asLeft
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to left and " +
-      "- The current orientation is North " +
-      "Then it must return a new position with West orientation" in {
+        result mustBe ErrorMessage("La orientación actual para realizar un giro a la derecha no está definida").asLeft
+      }
 
-      val requiredMotion = Motion( 'I' )
-      val currentPosition = Position( x = 1, y = 5, NORTH )
-      val expectedPosition = Position( x = 1, y = 5, WEST )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to left and " +
+        "- The current orientation is North " +
+        "Then it must return a new position with West orientation" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'I' )
+        val currentPosition = Position( x = 1, y = 5, NORTH )
+        val expectedPosition = Position( x = 1, y = 5, WEST )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to left and " +
-      "- The current orientation is West " +
-      "Then it must return a new position with South orientation" in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'I' )
-      val currentPosition = Position( x = 1, y = 5, WEST )
-      val expectedPosition = Position( x = 1, y = 5, SOUTH )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to left and " +
+        "- The current orientation is West " +
+        "Then it must return a new position with South orientation" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'I' )
+        val currentPosition = Position( x = 1, y = 5, WEST )
+        val expectedPosition = Position( x = 1, y = 5, SOUTH )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to left and " +
-      "- The current orientation is South " +
-      "Then it must return a new position with East orientation" in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'I' )
-      val currentPosition = Position( x = 1, y = 5, SOUTH )
-      val expectedPosition = Position( x = 1, y = 5, EAST )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to left and " +
+        "- The current orientation is South " +
+        "Then it must return a new position with East orientation" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'I' )
+        val currentPosition = Position( x = 1, y = 5, SOUTH )
+        val expectedPosition = Position( x = 1, y = 5, EAST )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to left and " +
-      "- The current orientation is East " +
-      "Then it must return a new position with North orientation" in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'I' )
-      val currentPosition = Position( x = 1, y = 5, EAST )
-      val expectedPosition = Position( x = 1, y = 5, NORTH )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to left and " +
+        "- The current orientation is East " +
+        "Then it must return a new position with North orientation" in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'I' )
+        val currentPosition = Position( x = 1, y = 5, EAST )
+        val expectedPosition = Position( x = 1, y = 5, NORTH )
 
-      result mustBe expectedPosition.asRight
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is to left and " +
-      "- The current orientation is invalid " +
-      "Then it must return an Error " in {
+        result mustBe expectedPosition.asRight
+      }
 
-      val requiredMotion = Motion( 'I' )
-      val currentPosition = Position( x = 1, y = 5, INVALID_ORIENTATION )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is to left and " +
+        "- The current orientation is invalid " +
+        "Then it must return an Error " in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'I' )
+        val currentPosition = Position( x = 1, y = 5, INVALID_ORIENTATION )
 
-      result mustBe ErrorMessage("La orientación actual para realizar un giro a la izquierda no está definida").asLeft
-    }
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-    "When makes a motion " +
-      "Where: " +
-      "- The required motion is invalid and " +
-      "Then it must return an Error " in {
+        result mustBe ErrorMessage("La orientación actual para realizar un giro a la izquierda no está definida").asLeft
+      }
 
-      val requiredMotion = Motion( 'K' )
-      val currentPosition = Position( x = 1, y = 5, NORTH )
+      "When makes a motion " +
+        "Where: " +
+        "- The required motion is invalid and " +
+        "Then it must return an Error " in {
 
-      val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+        val requiredMotion = Motion( 'K' )
+        val currentPosition = Position( x = 1, y = 5, NORTH )
 
-      result mustBe ErrorMessage( "El movimiento no está permitido" ).asLeft
+        val result = MotionService.makeAMotion( requiredMotion, currentPosition )
+
+        result mustBe ErrorMessage( "El movimiento no está permitido" ).asLeft
+      }
     }
   }
 }

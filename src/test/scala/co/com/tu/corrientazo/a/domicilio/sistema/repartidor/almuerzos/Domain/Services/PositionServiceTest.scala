@@ -8,50 +8,53 @@ import org.scalatest.{MustMatchers, WordSpecLike}
 
 class PositionServiceTest extends MustMatchers with WordSpecLike {
 
-  "validatePosition" should {
+  "PositionService" should {
 
-    "When starts to validate the drone position " +
-      "Where X coordinate is outbound" +
-      "Then it must return an error " in {
+    "validatePosition" should {
 
-      val positiontoValidate = Position( 11, 5, NORTH )
+      "When starts to validate the drone position " +
+        "Where X coordinate is outbound" +
+        "Then it must return an error " in {
 
-      val result = PositionService.validatePosition( positiontoValidate )
+        val positiontoValidate = Position( 11, 5, NORTH )
 
-      result mustBe ErrorMessage( "La posición en el eje X a la que desea moverse es inválida. " ).asLeft
-    }
+        val result = PositionService.validatePosition( positiontoValidate )
 
-    "When starts to validate the drone position " +
-      "Where Y coordinate is outbound" +
-      "Then it must return an error " in {
+        result mustBe ErrorMessage( "La posición en el eje X a la que desea moverse es inválida. " ).asLeft
+      }
 
-      val positiontoValidate = Position( 5, -11, NORTH )
+      "When starts to validate the drone position " +
+        "Where Y coordinate is outbound" +
+        "Then it must return an error " in {
 
-      val result = PositionService.validatePosition( positiontoValidate )
+        val positiontoValidate = Position( 5, -11, NORTH )
 
-      result mustBe ErrorMessage( "La posición en el eje Y a la que desea moverse es inválida. " ).asLeft
-    }
+        val result = PositionService.validatePosition( positiontoValidate )
 
-    "When starts to validate the drone position " +
-      "Where X and Y coordinates are outbound" +
-      "Then it must return an error " in {
+        result mustBe ErrorMessage( "La posición en el eje Y a la que desea moverse es inválida. " ).asLeft
+      }
 
-      val positiontoValidate = Position( 15, -20, NORTH )
+      "When starts to validate the drone position " +
+        "Where X and Y coordinates are outbound" +
+        "Then it must return an error " in {
 
-      val result = PositionService.validatePosition( positiontoValidate )
+        val positiontoValidate = Position( 15, -20, NORTH )
 
-      result mustBe ErrorMessage( "La posición en el eje X a la que desea moverse es inválida. - La posición en el eje Y a la que desea moverse es inválida. " ).asLeft
-    }
+        val result = PositionService.validatePosition( positiontoValidate )
 
-    "When starts to validate the drone position " +
-      "Where X and Y coordinates are inbound" +
-      "Then it must return an the validated position " in {
+        result mustBe ErrorMessage( "La posición en el eje X a la que desea moverse es inválida. - La posición en el eje Y a la que desea moverse es inválida. " ).asLeft
+      }
 
-      val positiontoValidate = Position( 10, 5, NORTH )
+      "When starts to validate the drone position " +
+        "Where X and Y coordinates are inbound" +
+        "Then it must return an the validated position " in {
 
-      val result = PositionService.validatePosition( positiontoValidate )
+        val positiontoValidate = Position( 10, 5, NORTH )
 
-      result mustBe positiontoValidate.asRight
+        val result = PositionService.validatePosition( positiontoValidate )
+
+        result mustBe positiontoValidate.asRight
+      }
     }
   }
 

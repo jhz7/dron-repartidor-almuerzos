@@ -2,47 +2,50 @@ package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Applicati
 
 import cats.implicits._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.{DroneIdentifier, Position}
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types.{EAST, NORTH}
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types.{EAST, NORTH, SOUTH, WEST}
 import org.scalatest.{MustMatchers, WordSpecLike}
 
 class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
 
-  "deliverLunches" should {
+  "LunchDeliveryService" should {
 
-    "When starts to deliver lunches given a list of routes " +
-      "Where the delivery is successfull " +
-      "Then it must restur a list with the places visited " in {
+    "deliverLunches" should {
 
-      val routes = List("AADA", "ID", "A", "A")
-      val droneIdentifier = DroneIdentifier( id = 1 )
-      val expectedResult = List(
-        Position( 2, 2, EAST ),
-        Position( 3, 3, EAST ),
-        Position( 4, 3, EAST ),
-        Position( 0, 1, NORTH )
-      )
+      "When starts to deliver lunches given a list of routes " +
+        "Where a provided motion is invalid " +
+        "Then it must restur a list with the places visited " in {
 
-      val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
+        val routes = List("AAAAIAAD", "DDAIAD", "AAIADAD" )
+        val droneIdentifier = DroneIdentifier( id = 1 )
+        val expectedResult = List(
+          Position( -2, 4, NORTH ),
+          Position( -1, 3, SOUTH ),
+          Position( 0, 0, WEST )
+        )
 
-      resultado mustBe expectedResult.asRight
-    }
+        val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
 
-    "When starts to deliver lunches given a list of routes " +
-      "Where a provided motion is invalid " +
-      "Then it must restur a list with the places visited " in {
+        resultado mustBe expectedResult.asRight
+      }
 
-      val routes = List("AADA", "ID", "A", "A")
-      val droneIdentifier = DroneIdentifier( id = 1 )
-      val expectedResult = List(
-        Position( 2, 2, EAST ),
-        Position( 3, 3, EAST ),
-        Position( 4, 3, EAST ),
-        Position( 0, 1, NORTH )
-      )
+      "When starts to deliver lunches given a list of routes " +
+        "Where the delivery is successfull " +
+        "Then it must restur a list with the places visited " in {
 
-      val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
+        val routes = List("AADA", "IAD", "A", "A")
+        val droneIdentifier = DroneIdentifier( id = 1 )
+        val expectedResult = List(
+          Position( 1, 2, EAST ),
+          Position( 1, 3, EAST ),
+          Position( 2, 3, EAST ),
+          Position( 0, 1, NORTH )
+        )
 
-      resultado mustBe expectedResult.asRight
+        val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
+
+        resultado mustBe expectedResult.asRight
+      }
+
     }
   }
 }
