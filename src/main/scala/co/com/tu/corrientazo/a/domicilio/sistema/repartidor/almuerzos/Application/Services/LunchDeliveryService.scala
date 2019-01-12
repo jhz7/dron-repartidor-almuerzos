@@ -11,7 +11,7 @@ import scala.annotation.tailrec
 
 object LunchDeliveryService {
 
-  def deliverLunches( routes: List[String], droneIdentifier: DroneIdentifier ): CustomEither[Drone] = {
+  def deliverLunches( routes: List[String], droneIdentifier: DroneIdentifier ): CustomEither[List[Position]] = {
 
     val initialPosition = Position( x = 0, y = 0, NORTH )
     val drone = Drone( droneIdentifier, initialPosition )
@@ -20,17 +20,18 @@ object LunchDeliveryService {
       .sliding( lunchAmountPerTravel, lunchAmountPerTravel ).toList
       .map( routesPerTravel => deliverLunchesPerTravel( routesPerTravel, drone ) )
       .sequence
-      .map( _ => drone )
+      .map( _.flatten )
   }
 
   @tailrec
-  private def deliverLunchesPerTravel( routes: List[String], drone: Drone ): CustomEither[Drone] = {
+  private def deliverLunchesPerTravel( routes: List[String], drone: Drone, visitedPlaces: List[Position] = Nil ): CustomEither[List[Position]] = {
     routes match {
-      case Nil => drone.asRight
+      case Nil => visitedPlaces.asRight
       case x :: xs =>
         deliverLunch( x, drone ) match {
           case Right( newPosition ) =>
-            deliverLunchesPerTravel( xs, drone.copy( currentPosition = newPosition ) )
+            val newVisitedPlaces = visitedPlaces :+ newPosition
+            deliverLunchesPerTravel( xs, drone.copy( currentPosition = newPosition ), newVisitedPlaces )
           case Left(error)          => error.asLeft
         }
     }

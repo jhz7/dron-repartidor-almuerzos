@@ -88,10 +88,10 @@ class MotionServiceTest extends MustMatchers with WordSpecLike {
       "Where: " +
       "- The required motion is to right and " +
       "- The current orientation is North " +
-      "Then it must return a new position with East orientation and X coordinate sums one" in {
+      "Then it must return a new position with East orientation" in {
 
       val requiredMotion = Motion( 'D' )
-      val currentPosition = Position( x = 1, y = 5, NORTH )
+      val currentPosition = Position( x = 2, y = 5, NORTH )
       val expectedPosition = Position( x = 2, y = 5, EAST )
 
       val result = MotionService.makeAMotion( requiredMotion, currentPosition )
@@ -103,11 +103,11 @@ class MotionServiceTest extends MustMatchers with WordSpecLike {
       "Where: " +
       "- The required motion is to right and " +
       "- The current orientation is East " +
-      "Then it must return a new position with South orientation and Y coordinate subtracts one" in {
+      "Then it must return a new position with South orientation" in {
 
       val requiredMotion = Motion( 'D' )
       val currentPosition = Position( x = 1, y = 5, EAST )
-      val expectedPosition = Position( x = 1, y = 4, SOUTH )
+      val expectedPosition = Position( x = 1, y = 5, SOUTH )
 
       val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
@@ -118,11 +118,11 @@ class MotionServiceTest extends MustMatchers with WordSpecLike {
       "Where: " +
       "- The required motion is to right and " +
       "- The current orientation is South " +
-      "Then it must return a new position with West orientation and X coordinate subtracts one" in {
+      "Then it must return a new position with West orientation" in {
 
       val requiredMotion = Motion( 'D' )
       val currentPosition = Position( x = 1, y = 5, SOUTH )
-      val expectedPosition = Position( x = 0, y = 5, WEST )
+      val expectedPosition = Position( x = 1, y = 5, WEST )
 
       val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
@@ -133,11 +133,11 @@ class MotionServiceTest extends MustMatchers with WordSpecLike {
       "Where: " +
       "- The required motion is to right and " +
       "- The current orientation is West " +
-      "Then it must return a new position with North orientation and Y coordinate sums one" in {
+      "Then it must return a new position with North orientation" in {
 
       val requiredMotion = Motion( 'D' )
       val currentPosition = Position( x = 1, y = 5, WEST )
-      val expectedPosition = Position( x = 1, y = 6, NORTH )
+      val expectedPosition = Position( x = 1, y = 5, NORTH )
 
       val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
@@ -162,11 +162,11 @@ class MotionServiceTest extends MustMatchers with WordSpecLike {
       "Where: " +
       "- The required motion is to left and " +
       "- The current orientation is North " +
-      "Then it must return a new position with West orientation and X coordinate subtracts one" in {
+      "Then it must return a new position with West orientation" in {
 
       val requiredMotion = Motion( 'I' )
       val currentPosition = Position( x = 1, y = 5, NORTH )
-      val expectedPosition = Position( x = 0, y = 5, WEST )
+      val expectedPosition = Position( x = 1, y = 5, WEST )
 
       val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
@@ -177,11 +177,11 @@ class MotionServiceTest extends MustMatchers with WordSpecLike {
       "Where: " +
       "- The required motion is to left and " +
       "- The current orientation is West " +
-      "Then it must return a new position with South orientation and Y coordinate subtracts one" in {
+      "Then it must return a new position with South orientation" in {
 
       val requiredMotion = Motion( 'I' )
       val currentPosition = Position( x = 1, y = 5, WEST )
-      val expectedPosition = Position( x = 1, y = 4, SOUTH )
+      val expectedPosition = Position( x = 1, y = 5, SOUTH )
 
       val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
@@ -192,11 +192,11 @@ class MotionServiceTest extends MustMatchers with WordSpecLike {
       "Where: " +
       "- The required motion is to left and " +
       "- The current orientation is South " +
-      "Then it must return a new position with East orientation and X coordinate sums one" in {
+      "Then it must return a new position with East orientation" in {
 
       val requiredMotion = Motion( 'I' )
       val currentPosition = Position( x = 1, y = 5, SOUTH )
-      val expectedPosition = Position( x = 2, y = 5, EAST )
+      val expectedPosition = Position( x = 1, y = 5, EAST )
 
       val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
@@ -207,11 +207,11 @@ class MotionServiceTest extends MustMatchers with WordSpecLike {
       "Where: " +
       "- The required motion is to left and " +
       "- The current orientation is East " +
-      "Then it must return a new position with North orientation and Y coordinate sums one" in {
+      "Then it must return a new position with North orientation" in {
 
       val requiredMotion = Motion( 'I' )
       val currentPosition = Position( x = 1, y = 5, EAST )
-      val expectedPosition = Position( x = 1, y = 6, NORTH )
+      val expectedPosition = Position( x = 1, y = 5, NORTH )
 
       val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 

@@ -18,19 +18,19 @@ object MotionService {
 
   private def moveToLeft( position: Position ): CustomEither[Position] =
     position.orientation match {
-      case NORTH => Position( position.x - 1, position.y, WEST ).asRight
-      case WEST  => Position( position.x, position.y - 1, SOUTH ).asRight
-      case SOUTH => Position( position.x + 1, position.y, EAST ).asRight
-      case EAST  => Position( position.x, position.y + 1, NORTH ).asRight
+      case NORTH => Position( position.x, position.y, WEST ).asRight
+      case WEST  => Position( position.x, position.y, SOUTH ).asRight
+      case SOUTH => Position( position.x, position.y, EAST ).asRight
+      case EAST  => Position( position.x, position.y, NORTH ).asRight
       case _     => ErrorMessage("La orientación actual para realizar un giro a la izquierda no está definida").asLeft
     }
 
   private def moveToRight( position: Position ): CustomEither[Position] =
     position.orientation match {
-      case NORTH => Position( position.x + 1, position.y, EAST ).asRight
-      case EAST  => Position( position.x, position.y - 1, SOUTH ).asRight
-      case SOUTH => Position( position.x - 1, position.y, WEST ).asRight
-      case WEST  => Position( position.x, position.y + 1, NORTH ).asRight
+      case NORTH => Position( position.x, position.y, EAST ).asRight
+      case EAST  => Position( position.x, position.y, SOUTH ).asRight
+      case SOUTH => Position( position.x, position.y, WEST ).asRight
+      case WEST  => Position( position.x, position.y, NORTH ).asRight
       case _     => ErrorMessage("La orientación actual para realizar un giro a la derecha no está definida").asLeft
     }
 
