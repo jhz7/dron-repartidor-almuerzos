@@ -11,9 +11,10 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
 
     "deliverLunches" should {
 
-      "When starts to deliver lunches given a list of routes " +
-        "Where a provided motion is invalid " +
-        "Then it must restur a list with the places visited " in {
+      "This test is only to show that example given in exercise has a wrong result: " +
+        "When starts to deliver lunches given a list of routes (taken from example) " +
+        "Where the delivery is successfull " +
+        "Then it must resturn a list with the places visited " in {
 
         val routes = List("AAAAIAAD", "DDAIAD", "AAIADAD" )
         val droneIdentifier = DroneIdentifier( id = 1 )
@@ -30,7 +31,7 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
 
       "When starts to deliver lunches given a list of routes " +
         "Where the delivery is successfull " +
-        "Then it must restur a list with the places visited " in {
+        "Then it must resturn a list with the places visited " in {
 
         val routes = List("AADA", "IAD", "A", "A")
         val droneIdentifier = DroneIdentifier( id = 1 )
