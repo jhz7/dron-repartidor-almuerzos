@@ -27,5 +27,5 @@ package object Application {
   }
 
   private def generateUniqueErrorMessage( errors: List[ErrorMessage] ): ErrorMessage =
-    ErrorMessage( errors.mkString("- ") )
+    ErrorMessage( errors.map( _.message ).mkString("- ") )
 }

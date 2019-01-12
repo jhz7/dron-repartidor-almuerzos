@@ -8,4 +8,5 @@ libraryDependencies ++= Seq(
   "org.typelevel"   %%  "cats-core"    % "1.4.0"  withSources()
   ,"org.typelevel"  %%  "cats-kernel"  % "1.4.0"  withSources()
   ,"org.typelevel"  %%  "cats-macros"  % "1.4.0"  withSources()
+  ,"org.scalatest"  %%  "scalatest"    % "3.0.5"  % "test"
 )
