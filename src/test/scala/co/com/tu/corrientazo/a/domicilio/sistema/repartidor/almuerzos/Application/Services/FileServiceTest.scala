@@ -8,15 +8,40 @@ class FileServiceTest extends MustMatchers with WordSpecLike {
 
     "writeLinesToFile" should {
 
-      "" in {
+      "When starts to write a file " +
+        "Where the file does not exist" +
+        "Then the file is created " in {
 
-        val linesToWrite = List("abc\n", "def")
+        val linesToWrite = List("Foo", "Bar", "Baz")
+        val idFile = "test"
 
-        //FileService.writeLinesToFile( linesToWrite, idFile = "o1" )
+        FileService.writeLinesToFile( linesToWrite, idFile )
+      }
+    }
 
-        FileService.write( "01", "hola\nhello\nhi" )
+    "readLinesFromFile" should {
 
-        val x = 1
+      "When starts to read a file " +
+        "Where the file exists" +
+        "Then it must return lines readed" in {
+
+        val linesExpected = List("Foo", "Bar", "Baz")
+        val idFile = "test"
+
+        val linesReaded = FileService.readLinesFromFile( idFile )
+
+        assertResult( linesExpected )( linesReaded )
+      }
+
+      "When starts to read a file " +
+        "Where the file does not exists" +
+        "Then it must return aan empty list " in {
+
+        val idFile = "not-exists"
+
+        val linesReaded = FileService.readLinesFromFile( idFile )
+
+        linesReaded mustBe Nil
       }
     }
   }
