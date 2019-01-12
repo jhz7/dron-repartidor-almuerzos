@@ -202,7 +202,7 @@ class MotionServiceTest extends MustMatchers with WordSpecLike {
 
         val result = MotionService.makeAMotion( requiredMotion, currentPosition )
 
-        result mustBe ErrorMessage( "El movimiento no está permitido" ).asLeft
+        result mustBe ErrorMessage( "Está intentando hacer un movimiento no permitido, por favor revisar las rutas establecidas. " ).asLeft
       }
     }
   }

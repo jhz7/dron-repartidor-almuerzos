@@ -19,13 +19,15 @@ package object Application {
     )
   }
 
-  implicit class EitherConvert[A, B]( val e: Seq[Either[A, B]] ) extends AnyVal {
+  implicit class EitherConvert[A, B <: Any]( val e: Seq[Either[A, B]] ) extends AnyVal {
     def sequence: Either[A, List[B]] =
       e.foldRight( Right( Nil ): Either[A, List[B]] ) {
         ( e, acc ) => for ( xs <- acc.right; x <- e.right ) yield x :: xs
       }
   }
 
-  private def generateUniqueErrorMessage( errors: List[ErrorMessage] ): ErrorMessage =
-    ErrorMessage( errors.map( _.message ).mkString("- ") )
+  private def generateUniqueErrorMessage( errors: List[ErrorMessage] ): ErrorMessage = {
+    val message = errors.map( _.message ).mkString( "- " )
+    ErrorMessage( message )
+  }
 }

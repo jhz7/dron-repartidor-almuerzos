@@ -13,7 +13,7 @@ object MotionService {
       case FORWARD => moveForward( currentPosition )
       case RIGHT   => moveToRight( currentPosition )
       case LEFT    => moveToLeft( currentPosition )
-      case _       => ErrorMessage( "El movimiento no está permitido" ).asLeft
+      case _       => ErrorMessage( "Está intentando hacer un movimiento no permitido, por favor revisar las rutas establecidas. " ).asLeft
     }
 
   private def moveToLeft( position: Position ): CustomEither[Position] =

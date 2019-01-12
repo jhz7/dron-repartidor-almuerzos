@@ -1,6 +1,7 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
 
 import cats.implicits._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.{DroneIdentifier, Position}
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types.{EAST, NORTH, SOUTH, WEST}
 import org.scalatest.{MustMatchers, WordSpecLike}
@@ -17,7 +18,7 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
         "Then it must resturn a list with the places visited " in {
 
         val routes = List("AAAAIAAD", "DDAIAD", "AAIADAD" )
-        val droneIdentifier = DroneIdentifier( id = 1 )
+        val droneIdentifier = DroneIdentifier( id = "1" )
         val expectedResult = List(
           Position( -2, 4, NORTH ),
           Position( -1, 3, SOUTH ),
@@ -34,7 +35,7 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
         "Then it must resturn a list with the places visited " in {
 
         val routes = List("AADA", "IAD", "A", "A")
-        val droneIdentifier = DroneIdentifier( id = 1 )
+        val droneIdentifier = DroneIdentifier( id = "1" )
         val expectedResult = List(
           Position( 1, 2, EAST ),
           Position( 1, 3, EAST ),
@@ -45,6 +46,32 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
         val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
 
         resultado mustBe expectedResult.asRight
+      }
+
+      "When starts to deliver lunches given a list of routes " +
+        "Where a route has an invalid motion (J) " +
+        "Then it must resturn a n error " in {
+
+        val routes = List("AAJDA", "IAD")
+        val droneIdentifier = DroneIdentifier( id = "1" )
+        val expectedResult = ErrorMessage( "Está intentando hacer un movimiento no permitido, por favor revisar las rutas establecidas. " )
+
+        val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
+
+        resultado mustBe expectedResult.asLeft
+      }
+
+      "When starts to deliver lunches given a list of routes " +
+        "Where a calculated position is out of allowed reange " +
+        "Then it must resturn a n error " in {
+
+        val routes = List("AADAAAAAAAAAAA", "IAD")
+        val droneIdentifier = DroneIdentifier( id = "1" )
+        val expectedResult = ErrorMessage( "La posición en el eje X a la que desea moverse es inválida. " )
+
+        val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
+
+        resultado mustBe expectedResult.asLeft
       }
 
     }
