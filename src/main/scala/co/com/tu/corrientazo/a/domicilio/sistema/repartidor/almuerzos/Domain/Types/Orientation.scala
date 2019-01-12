@@ -1,15 +1,6 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types
 
-sealed trait Orientation {
-  def apply( orientation: String ): Orientation =
-    orientation match {
-      case "N" => NORTH
-      case "S" => SOUTH
-      case "E" => EAST
-      case "W" => WEST
-      case _   => INVALID_ORIENTATION
-    }
-}
+sealed trait Orientation
 
 object Orientation {
   def apply( orientation: String ): Orientation =
