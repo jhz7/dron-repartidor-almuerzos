@@ -1,9 +1,9 @@
-package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application
+package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types
 
 import cats.data.ValidatedNel
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
 
-package object types {
+object Types {
 
   type CustomEither[A] = Either[ErrorMessage, A]
 

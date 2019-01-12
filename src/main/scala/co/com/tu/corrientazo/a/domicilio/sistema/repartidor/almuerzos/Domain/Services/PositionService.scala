@@ -1,9 +1,9 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Services
 
 import cats.implicits._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Application._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types.{CustomEither, CustomValidated}
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types.Types.{CustomEither, CustomValidated}
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.Position
 
 object PositionService {

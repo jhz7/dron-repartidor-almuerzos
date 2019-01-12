@@ -2,13 +2,21 @@ package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Applicati
 
 import cats.implicits._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types.CustomEither
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types.Types.CustomEither
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.Position
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types._
 
 object MotionService {
 
-  def moveToLeft( position: Position ): CustomEither[Position] =
+  def makeAMotion( motion: Motion, currentPosition: Position ): CustomEither[Position] =
+    motion match {
+      case FORWARD => moveForward( currentPosition )
+      case RIGHT   => moveToRight( currentPosition )
+      case LEFT    => moveToLeft( currentPosition )
+      case _       => ErrorMessage( "El movimiento no está permitido" ).asLeft
+    }
+
+  private def moveToLeft( position: Position ): CustomEither[Position] =
     position.orientation match {
       case NORTH => Position( position.x - 1, position.y, WEST ).asRight
       case WEST  => Position( position.x, position.y - 1, SOUTH ).asRight
@@ -17,7 +25,7 @@ object MotionService {
       case _     => ErrorMessage("La orientación actual para realizar un giro a la izquierda no está definida").asLeft
     }
 
-  def moveToRight( position: Position ): CustomEither[Position] =
+  private def moveToRight( position: Position ): CustomEither[Position] =
     position.orientation match {
       case NORTH => Position( position.x + 1, position.y, EAST ).asRight
       case EAST  => Position( position.x, position.y - 1, SOUTH ).asRight
@@ -26,7 +34,7 @@ object MotionService {
       case _     => ErrorMessage("La orientación actual para realizar un giro a la derecha no está definida").asLeft
     }
 
-  def moveForward( position: Position ): CustomEither[Position] =
+  private def moveForward( position: Position ): CustomEither[Position] =
     position.orientation match {
       case NORTH => Position( position.x, position.y + 1, NORTH ).asRight
       case EAST  => Position( position.x + 1, position.y, EAST ).asRight

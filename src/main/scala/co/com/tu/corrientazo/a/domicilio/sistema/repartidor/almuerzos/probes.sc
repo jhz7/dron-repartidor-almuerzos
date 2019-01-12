@@ -1,1 +1,1 @@
-val rangeOfMotionInX: List[Int] = (-10 to 10).toList
+val rangeOfMotionInX = (-10 to 10).sliding(4, 4).toList

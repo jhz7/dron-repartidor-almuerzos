@@ -1,11 +1,21 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types
 
-trait Motion {
-  def apply( motion: String ): Motion =
+sealed trait Motion {
+  def apply( motion: Char ): Motion =
     motion match {
-      case "A" => FORWARD
-      case "I" => LEFT
-      case "D" => RIGHT
+      case 'A' => FORWARD
+      case 'I' => LEFT
+      case 'D' => RIGHT
+      case _   => INVALID_MOTION
+    }
+}
+
+object Motion {
+  def apply( motion: Char ): Motion =
+    motion match {
+      case 'A' => FORWARD
+      case 'I' => LEFT
+      case 'D' => RIGHT
       case _   => INVALID_MOTION
     }
 }
