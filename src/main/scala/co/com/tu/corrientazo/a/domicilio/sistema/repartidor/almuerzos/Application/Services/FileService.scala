@@ -1,20 +1,24 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
 
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.{DroneIdentifier, Position}
+import java.io.{ File, PrintWriter }
 
-import scala.io.{BufferedSource, Source}
+import scala.io.{ BufferedSource, Source }
 
 object FileService {
 
-  def readRoutesFile( fileName: String ): List[String] = {
-    val dir = s"resources/in/$fileName.txt"
-    val sourceStream: BufferedSource = Source.fromFile( dir )
-    sourceStream.getLines().toList
+  def readLinesFromFile( idFile: String ): List[String] = {
+    val fileToRead = s"resources/in/in$idFile.txt"
+    val bufferedSource: BufferedSource = Source.fromFile( fileToRead )
+    
+    bufferedSource.getLines().toList
   }
 
-  def writeFileOfVisitedPlaces( visitedPlaces: List[Position], idDrone: String ) = {
-    val fileToWrite = s"resources/out/out$idDrone.txt"
-    val linesToWrite = visitedPlaces.map( position => s"( ${position.x}, ${position.y} ) dirección ${position.orientation.toString} \n" )
-    ???
+  def writeLinesToFile( linesToWrite: List[String], idFile: String ): Unit = {
+
+    val fileToWrite = s"src/resources/out/out$idFile.txt"
+    val pw = new PrintWriter(new File(fileToWrite))
+    val content = linesToWrite.mkString("\n")
+
+    try pw.write(content) finally pw.close()
   }
 }
