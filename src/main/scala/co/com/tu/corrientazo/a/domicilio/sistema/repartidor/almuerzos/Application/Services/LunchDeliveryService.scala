@@ -23,26 +23,22 @@ object LunchDeliveryService {
       .map( _ => drone )
   }
 
-  private def deliverLunchesPerTravel( routes: List[String], drone: Drone ): CustomEither[Drone] = {
-    val reverseRoutes = routes.reverse
-    processDeliverLunchesPerTravel( reverseRoutes, drone )
-  }
-
   @tailrec
-  private def processDeliverLunchesPerTravel( routes: List[String], drone: Drone ): CustomEither[Drone] = {
+  private def deliverLunchesPerTravel( routes: List[String], drone: Drone ): CustomEither[Drone] = {
     routes match {
       case Nil => drone.asRight
       case x :: xs =>
         deliverLunch( x, drone ) match {
-          case Right( newPosition ) => processDeliverLunchesPerTravel( xs, drone.copy( currentPosition = newPosition ) )
+          case Right( newPosition ) =>
+            deliverLunchesPerTravel( xs, drone.copy( currentPosition = newPosition ) )
           case Left(error)          => error.asLeft
         }
     }
   }
 
   private def deliverLunch( route: String, drone: Drone ): CustomEither[Position] = {
-    val reverseRoute = route.toList.reverse
-    processDeliverLunch( reverseRoute, drone )
+    val motionList = route.toList
+    processDeliverLunch( motionList, drone )
   }
 
   @tailrec
