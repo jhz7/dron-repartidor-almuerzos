@@ -1,10 +1,10 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Services
 
+import cats.implicits._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Application._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types.{CustomEither, CustomValidated}
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.Position
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Application._
-import cats.implicits._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
 
 object PositionService {
 
@@ -22,7 +22,7 @@ object PositionService {
       ErrorMessage( "La posición en el eje X a la que desea moverse es inválida. " ).invalidNel
 
   private def validateYPosition( yPosition: Int ): CustomValidated[Int] =
-    if( rangeOfMotionInX.contains( yPosition ) )
+    if( rangeOfMotionInY.contains( yPosition ) )
       yPosition.valid
     else
       ErrorMessage( "La posición en el eje Y a la que desea moverse es inválida. " ).invalidNel
