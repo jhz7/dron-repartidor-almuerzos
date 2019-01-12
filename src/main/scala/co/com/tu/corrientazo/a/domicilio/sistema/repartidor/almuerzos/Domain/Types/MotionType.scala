@@ -1,9 +1,9 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types
 
-sealed trait Motion
+sealed trait MotionType
 
-object Motion {
-  def apply( motion: Char ): Motion =
+object MotionType {
+  def apply( motion: Char ): MotionType =
     motion match {
       case 'A' => FORWARD
       case 'I' => LEFT
@@ -12,18 +12,18 @@ object Motion {
     }
 }
 
-case object FORWARD extends Motion {
+case object FORWARD extends MotionType {
   override def toString: String = "A"
 }
 
-case object LEFT extends Motion {
+case object LEFT extends MotionType {
   override def toString: String = "I"
 }
 
-case object RIGHT extends Motion {
+case object RIGHT extends MotionType {
   override def toString: String = "D"
 }
 
-case object INVALID_MOTION extends Motion {
+case object INVALID_MOTION extends MotionType {
   override def toString: String = "InvalidMotion"
 }

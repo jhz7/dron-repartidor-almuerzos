@@ -8,7 +8,7 @@ import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Typ
 
 object MotionService {
 
-  def makeAMotion( motion: Motion, currentPosition: Position ): CustomEither[Position] =
+  def makeAMotion(motion: MotionType, currentPosition: Position ): CustomEither[Position] =
     motion match {
       case FORWARD => moveForward( currentPosition )
       case RIGHT   => moveToRight( currentPosition )
@@ -22,7 +22,6 @@ object MotionService {
       case WEST  => Position( position.x, position.y, SOUTH ).asRight
       case SOUTH => Position( position.x, position.y, EAST ).asRight
       case EAST  => Position( position.x, position.y, NORTH ).asRight
-      case _     => ErrorMessage("La orientación actual para realizar un giro a la izquierda no está definida").asLeft
     }
 
   private def moveToRight( position: Position ): CustomEither[Position] =
@@ -31,7 +30,6 @@ object MotionService {
       case EAST  => Position( position.x, position.y, SOUTH ).asRight
       case SOUTH => Position( position.x, position.y, WEST ).asRight
       case WEST  => Position( position.x, position.y, NORTH ).asRight
-      case _     => ErrorMessage("La orientación actual para realizar un giro a la derecha no está definida").asLeft
     }
 
   private def moveForward( position: Position ): CustomEither[Position] =
@@ -40,6 +38,5 @@ object MotionService {
       case EAST  => Position( position.x + 1, position.y, EAST ).asRight
       case SOUTH => Position( position.x, position.y - 1, SOUTH ).asRight
       case WEST  => Position( position.x - 1, position.y, WEST ).asRight
-      case _     => ErrorMessage("La orientación no está definida y por lo tanto, no es posible mover el dron hacia adelante").asLeft
     }
 }

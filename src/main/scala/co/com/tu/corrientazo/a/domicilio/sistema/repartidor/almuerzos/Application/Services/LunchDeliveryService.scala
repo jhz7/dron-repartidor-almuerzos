@@ -47,7 +47,7 @@ object LunchDeliveryService {
     route match {
       case Nil => drone.currentPosition.asRight
       case x :: xs =>
-        val motion = Motion( x )
+        val motion = MotionType( x )
 
         val validatedPosition = for {
           newPosition <- MotionService.makeAMotion( motion, drone.currentPosition )
