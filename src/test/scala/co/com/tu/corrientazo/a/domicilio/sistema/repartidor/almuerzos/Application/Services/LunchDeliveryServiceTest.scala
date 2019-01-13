@@ -1,11 +1,15 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
 
 import cats.implicits._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.executionScheduler
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Tools._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.{DroneIdentifier, Position}
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types.{EAST, NORTH, SOUTH, WEST}
 import org.scalatest.{MustMatchers, WordSpecLike}
+
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
 
 class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
 
@@ -41,7 +45,7 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
           Position( 1, 2, EAST ),
           Position( 1, 3, EAST ),
           Position( 2, 3, EAST ),
-          Position( 0, 1, NORTH )
+          Position( 3, 3, EAST )
         )
 
         val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
@@ -86,17 +90,24 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
         "- The visited places are inbound " +
         "Then it must generate a file report " in{
 
-        val expectedLinesFromReportFile = List(
+        val expectedLinesFromReportsFile = List(
           "( -2, 4 ) dirección Norte",
           "( -1, 3 ) dirección Sur",
           "( 0, 0 ) dirección Oeste"
-        )
+        ) ++
+          List(
+            "( -2, 4 ) dirección Norte",
+            "( -1, 3 ) dirección Sur",
+            "( 0, 0 ) dirección Oeste"
+          )
 
-        LunchDeliveryService.startDeliveryLunches()
+        val idDrones = List( DroneIdentifier( id = "01" ), DroneIdentifier( id = "02" ) )
 
-        val linesWroteInReport = readLinesFromFileInOutDir("01")
+        Await.result( LunchDeliveryService.startDeliveryLunches( idDrones ).value.runAsync, Duration.Inf )
 
-        linesWroteInReport mustBe expectedLinesFromReportFile
+        val linesWroteInReports = idDrones.flatMap( idDrone => readLinesFromFileInOutDir( idDrone.id ) )
+
+        linesWroteInReports mustBe expectedLinesFromReportsFile
       }
     }
   }
