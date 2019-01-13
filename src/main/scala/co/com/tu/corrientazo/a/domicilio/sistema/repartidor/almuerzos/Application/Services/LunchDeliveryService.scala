@@ -11,6 +11,20 @@ import scala.annotation.tailrec
 
 object LunchDeliveryService {
 
+  def startDeliveryLunches(): Unit = {
+
+    val idDrone = DroneIdentifier( id = "01" )
+    val routes = FileService.readLinesFromFile( idDrone.id )
+
+    deliverLunches( routes, idDrone )
+      .map( visitedPlaces => {
+        val linesForReport = visitedPlaces.map( generateLineReportFromPosition )
+        FileService.writeLinesToFile( linesForReport, idDrone.id )
+      })
+
+    ()
+  }
+
   def deliverLunches( routes: List[String], droneIdentifier: DroneIdentifier ): CustomEither[List[Position]] = {
 
     val initialPosition = Position( x = 0, y = 0, NORTH )
@@ -39,11 +53,11 @@ object LunchDeliveryService {
 
   private def deliverLunch( route: String, drone: Drone ): CustomEither[Position] = {
     val motionList = route.toList
-    processDeliverLunch( motionList, drone )
+    processDeliveryLunch( motionList, drone )
   }
 
   @tailrec
-  private def processDeliverLunch( route: List[Char], drone: Drone ): CustomEither[Position] =
+  private def processDeliveryLunch( route: List[Char], drone: Drone ): CustomEither[Position] =
     route match {
       case Nil     => drone.currentPosition.asRight
       case x :: xs =>
@@ -55,8 +69,11 @@ object LunchDeliveryService {
         } yield newPosition
 
         validatedPosition match {
-          case Right( newPosition ) => processDeliverLunch( xs, drone.copy( currentPosition = newPosition ) )
+          case Right( newPosition ) => processDeliveryLunch( xs, drone.copy( currentPosition = newPosition ) )
           case error @ Left( _ )    => error
         }
     }
+
+  private def generateLineReportFromPosition( position: Position ): String =
+    s"( ${position.x}, ${position.y} ) dirección ${position.orientation.toString}"
 }

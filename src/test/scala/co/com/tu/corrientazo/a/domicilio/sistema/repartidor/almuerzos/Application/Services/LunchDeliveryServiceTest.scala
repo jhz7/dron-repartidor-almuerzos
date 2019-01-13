@@ -1,6 +1,7 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
 
 import cats.implicits._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Tools._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.{DroneIdentifier, Position}
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types.{EAST, NORTH, SOUTH, WEST}
@@ -74,6 +75,29 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
         resultado mustBe expectedResult.asLeft
       }
 
+    }
+
+    "startDeliveryLunches" should {
+
+      "When starts to deliver lunches " +
+        "Where: " +
+        "- The input file exists with routes (AAAAIAAD, DDAIAD, AAIADAD) " +
+        "- The specified motions are allowed " +
+        "- The visited places are inbound " +
+        "Then it must generate a file report " in{
+
+        val expectedLinesFromReportFile = List(
+          "( -2, 4 ) dirección Norte",
+          "( -1, 3 ) dirección Sur",
+          "( 0, 0 ) dirección Oeste"
+        )
+
+        LunchDeliveryService.startDeliveryLunches()
+
+        val linesWroteInReport = readLinesFromFileInOutDir("01")
+
+        linesWroteInReport mustBe expectedLinesFromReportFile
+      }
     }
   }
 }

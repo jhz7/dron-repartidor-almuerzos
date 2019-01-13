@@ -1,5 +1,6 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
 
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Tools._
 import org.scalatest.{MustMatchers, WordSpecLike}
 
 class FileServiceTest extends MustMatchers with WordSpecLike {
@@ -15,9 +16,11 @@ class FileServiceTest extends MustMatchers with WordSpecLike {
         val linesToWrite = List("Foo", "Bar", "Baz")
         val idFile = "test"
 
-        val result: Unit = FileService.writeLinesToFile( linesToWrite, idFile )
+        FileService.writeLinesToFile( linesToWrite, idFile )
 
-        result mustBe ()
+        val linesWrote = readLinesFromFileInOutDir( idFile )
+
+        linesWrote mustBe linesToWrite
       }
     }
 
@@ -32,7 +35,7 @@ class FileServiceTest extends MustMatchers with WordSpecLike {
 
         val linesReaded = FileService.readLinesFromFile( idFile )
 
-        assertResult( linesExpected )( linesReaded )
+        linesReaded mustBe linesExpected
       }
 
       "When starts to read a file " +
