@@ -1,28 +1,38 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
 
+import cats.data.EitherT
 import cats.implicits._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types.Types.CustomEither
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types.Types.{CustomEither, CustomEitherT}
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Services.PositionService
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types._
+import monix.eval.Task
+import monix.reactive.Observable
 
 import scala.annotation.tailrec
 
 object LunchDeliveryService {
 
-  def startDeliveryLunches( idDrones: List[DroneIdentifier] ): Unit = {
+  def startDeliveryLunches( idDrones: List[DroneIdentifier] ): CustomEitherT[List[Unit]] = {
+    EitherT {
+      Observable.fromIterable( idDrones )
+        .mapParallelUnordered( parallelism = 20 ){ idDrone => startDeliveryLunchesPerDrone( idDrone ).value }
+        .toListL.map( _.sequence )
+    }
+  }
 
-    val idDrone = DroneIdentifier( id = "01" )
-    val routes = FileService.readLinesFromFile( idDrone.id )
-
-    deliverLunches( routes, idDrone )
-      .map( visitedPlaces => {
-        val linesForReport = visitedPlaces.map( generateLineReportFromPosition )
-        FileService.writeLinesToFile( linesForReport, idDrone.id )
-      })
-
-    ()
+  private def startDeliveryLunchesPerDrone( idDrone: DroneIdentifier ): CustomEitherT[Unit] = {
+    EitherT {
+      Task {
+        val routes = FileService.readLinesFromFile( idDrone.id )
+        deliverLunches( routes, idDrone )
+          .map( visitedPlaces => {
+            val linesForReport = visitedPlaces.map( generateLineReportFromPosition )
+            FileService.writeLinesToFile( linesForReport, idDrone.id )
+          })
+      }
+    }
   }
 
   def deliverLunches( routes: List[String], droneIdentifier: DroneIdentifier ): CustomEither[List[Position]] = {

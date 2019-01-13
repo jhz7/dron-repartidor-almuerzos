@@ -1,7 +1,11 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos
 
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services.LunchDeliveryService
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.DroneIdentifier
+
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
 
 object Main extends App {
 
@@ -28,5 +32,7 @@ object Main extends App {
     DroneIdentifier( id = "20" )
   )
 
-  LunchDeliveryService.startDeliveryLunches( idDrones )
+  val future = LunchDeliveryService.startDeliveryLunches( idDrones ).value.runAsync
+
+  Await.result( future, Duration.Inf )
 }

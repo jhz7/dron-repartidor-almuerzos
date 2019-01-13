@@ -1,1 +1,0 @@
-val rangeOfMotionInX = (-10 to 10).sliding(4, 4).toList
