@@ -11,6 +11,18 @@ import scala.annotation.tailrec
 
 object LunchDeliveryService {
 
+  def startDeliveryLunches(): Unit = {
+
+    val idDron = DroneIdentifier( id = "01" )
+    val routes = FileService.readLinesFromFile( idDron.id )
+
+    deliverLunches( routes, idDron )
+      .map( visitedPlaces => {
+        val linesForReport = visitedPlaces.map( position => s"( ${position.x}, ${position.y} ) dirección ${position.orientation.toString}" )
+        FileService.writeLinesToFile( linesForReport, idDron.id )
+      })
+  }
+
   def deliverLunches( routes: List[String], droneIdentifier: DroneIdentifier ): CustomEither[List[Position]] = {
 
     val initialPosition = Position( x = 0, y = 0, NORTH )
@@ -26,7 +38,7 @@ object LunchDeliveryService {
   @tailrec
   private def deliverLunchesPerTravel( routes: List[String], drone: Drone, visitedPlaces: List[Position] = Nil ): CustomEither[List[Position]] = {
     routes match {
-      case Nil => visitedPlaces.asRight
+      case Nil     => visitedPlaces.asRight
       case x :: xs =>
         deliverLunch( x, drone ) match {
           case Right( newPosition ) =>
@@ -45,7 +57,7 @@ object LunchDeliveryService {
   @tailrec
   private def processDeliverLunch( route: List[Char], drone: Drone ): CustomEither[Position] =
     route match {
-      case Nil => drone.currentPosition.asRight
+      case Nil     => drone.currentPosition.asRight
       case x :: xs =>
         val motion = MotionType( x )
 

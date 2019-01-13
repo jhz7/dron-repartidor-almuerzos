@@ -15,7 +15,9 @@ class FileServiceTest extends MustMatchers with WordSpecLike {
         val linesToWrite = List("Foo", "Bar", "Baz")
         val idFile = "test"
 
-        FileService.writeLinesToFile( linesToWrite, idFile )
+        val result: Unit = FileService.writeLinesToFile( linesToWrite, idFile )
+
+        result mustBe ()
       }
     }
 

@@ -2,7 +2,7 @@ package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Applicati
 
 import java.io.{File, PrintWriter}
 
-import scala.io.{BufferedSource, Source}
+import scala.io.Source
 import scala.util.Try
 
 object FileService {
