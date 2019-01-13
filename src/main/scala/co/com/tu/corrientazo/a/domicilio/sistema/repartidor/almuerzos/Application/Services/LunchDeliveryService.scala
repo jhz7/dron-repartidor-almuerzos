@@ -29,7 +29,8 @@ object LunchDeliveryService {
         deliverLunches( routes, idDrone )
           .map( visitedPlaces => {
             val linesForReport = visitedPlaces.map( generateLineReportFromPosition )
-            FileService.writeLinesToFile( linesForReport, idDrone.id )
+            if ( linesForReport.nonEmpty ) FileService.writeLinesToFile( linesForReport, idDrone.id )
+            else ()
           })
       }
     }

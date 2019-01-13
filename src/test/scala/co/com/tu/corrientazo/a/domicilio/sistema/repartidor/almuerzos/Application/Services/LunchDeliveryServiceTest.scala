@@ -1,17 +1,22 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
 
 import cats.implicits._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.executionScheduler
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Tools._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Tools._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.executionScheduler
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.{DroneIdentifier, Position}
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types.{EAST, NORTH, SOUTH, WEST}
-import org.scalatest.{MustMatchers, WordSpecLike}
+import org.scalatest.{BeforeAndAfter, MustMatchers, WordSpecLike}
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
-class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
+class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike with BeforeAndAfter {
+
+  after {
+    println("After Test")
+    cleanOutDir()
+  }
 
   "LunchDeliveryService" should {
 
@@ -22,15 +27,15 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
         "Where the delivery is successfull " +
         "Then it must resturn a list with the places visited " in {
 
-        val routes = List("AAAAIAAD", "DDAIAD", "AAIADAD" )
-        val droneIdentifier = DroneIdentifier( id = "1" )
+        val routes = List("AAAAIAAD", "DDAIAD", "AAIADAD")
+        val droneIdentifier = DroneIdentifier(id = "1")
         val expectedResult = List(
-          Position( -2, 4, NORTH ),
-          Position( -1, 3, SOUTH ),
-          Position( 0, 0, WEST )
+          Position(-2, 4, NORTH),
+          Position(-1, 3, SOUTH),
+          Position(0, 0, WEST)
         )
 
-        val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
+        val resultado = LunchDeliveryService.deliverLunches(routes, droneIdentifier)
 
         resultado mustBe expectedResult.asRight
       }
@@ -40,15 +45,15 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
         "Then it must resturn a list with the places visited " in {
 
         val routes = List("AADA", "IAD", "A", "A")
-        val droneIdentifier = DroneIdentifier( id = "1" )
+        val droneIdentifier = DroneIdentifier(id = "1")
         val expectedResult = List(
-          Position( 1, 2, EAST ),
-          Position( 1, 3, EAST ),
-          Position( 2, 3, EAST ),
-          Position( 3, 3, EAST )
+          Position(1, 2, EAST),
+          Position(1, 3, EAST),
+          Position(2, 3, EAST),
+          Position(3, 3, EAST)
         )
 
-        val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
+        val resultado = LunchDeliveryService.deliverLunches(routes, droneIdentifier)
 
         resultado mustBe expectedResult.asRight
       }
@@ -58,10 +63,10 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
         "Then it must resturn a n error " in {
 
         val routes = List("AAJDA", "IAD")
-        val droneIdentifier = DroneIdentifier( id = "1" )
-        val expectedResult = ErrorMessage( "Está intentando hacer un movimiento no permitido, por favor revisar las rutas establecidas. " )
+        val droneIdentifier = DroneIdentifier(id = "1")
+        val expectedResult = ErrorMessage("Está intentando hacer un movimiento no permitido, por favor revisar las rutas establecidas. ")
 
-        val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
+        val resultado = LunchDeliveryService.deliverLunches(routes, droneIdentifier)
 
         resultado mustBe expectedResult.asLeft
       }
@@ -71,10 +76,10 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
         "Then it must resturn a n error " in {
 
         val routes = List("AADAAAAAAAAAAA", "IAD")
-        val droneIdentifier = DroneIdentifier( id = "1" )
-        val expectedResult = ErrorMessage( "La posición en el eje X a la que desea moverse es inválida. " )
+        val droneIdentifier = DroneIdentifier(id = "1")
+        val expectedResult = ErrorMessage("La posición en el eje X a la que desea moverse es inválida. ")
 
-        val resultado = LunchDeliveryService.deliverLunches( routes, droneIdentifier )
+        val resultado = LunchDeliveryService.deliverLunches(routes, droneIdentifier)
 
         resultado mustBe expectedResult.asLeft
       }
@@ -88,7 +93,7 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
         "- The input file exists with routes (AAAAIAAD, DDAIAD, AAIADAD) " +
         "- The specified motions are allowed " +
         "- The visited places are inbound " +
-        "Then it must generate a file report " in{
+        "Then it must generate a file report " in {
 
         val expectedLinesFromReportsFile = List(
           "( -2, 4 ) dirección Norte",
@@ -101,13 +106,42 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike {
             "( 0, 0 ) dirección Oeste"
           )
 
-        val idDrones = List( DroneIdentifier( id = "01" ), DroneIdentifier( id = "02" ) )
+        val idDrones = List(DroneIdentifier(id = "test-lunch-service"), DroneIdentifier(id = "test-lunch-service"))
 
-        Await.result( LunchDeliveryService.startDeliveryLunches( idDrones ).value.runAsync, Duration.Inf )
+        Await.result(LunchDeliveryService.startDeliveryLunches(idDrones).value.runAsync, Duration.Inf)
 
-        val linesWroteInReports = idDrones.flatMap( idDrone => readLinesFromFileInOutDir( idDrone.id ) )
+        val linesWroteInReports = idDrones.flatMap(idDrone => readLinesFromFileInOutDir(idDrone.id))
 
         linesWroteInReports mustBe expectedLinesFromReportsFile
+      }
+
+      "When starts to deliver lunches " +
+        "Where: " +
+        "- The input file exists with routes (Foo, Bar, Baz) " +
+        "- The specified motions are not allowed " +
+        "Then it must not generate a file report for that file " in {
+
+        val idDrones = List(DroneIdentifier(id = "test-lunch-service-bad"))
+
+        Await.result(LunchDeliveryService.startDeliveryLunches(idDrones).value.runAsync, Duration.Inf)
+
+        val linesWroteInReports = idDrones.flatMap(idDrone => readLinesFromFileInOutDir(idDrone.id))
+
+        linesWroteInReports mustBe Nil
+      }
+
+      "When starts to deliver lunches " +
+        "Where: " +
+        "- The input file not exists " +
+        "Then it must not generate a file report for that file " in {
+
+        val idDrones = List(DroneIdentifier(id = "not-exists"))
+
+        Await.result(LunchDeliveryService.startDeliveryLunches(idDrones).value.runAsync, Duration.Inf)
+
+        val linesWroteInReports = idDrones.flatMap(idDrone => readLinesFromFileInOutDir(idDrone.id))
+
+        linesWroteInReports mustBe Nil
       }
     }
   }

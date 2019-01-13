@@ -21,5 +21,7 @@ object FileService {
     val pw = new PrintWriter( new File( fileToWrite ))
 
     try pw.write( content ) finally pw.close()
+
+    ()
   }
 }

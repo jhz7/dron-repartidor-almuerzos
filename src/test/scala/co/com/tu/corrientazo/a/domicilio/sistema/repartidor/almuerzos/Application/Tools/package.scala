@@ -1,5 +1,8 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application
 
+import java.io.File
+import java.util
+
 import scala.io.Source
 import scala.util.Try
 
@@ -11,4 +14,6 @@ package object Tools {
 
     Try( Source.fromFile( fileToRead ).getLines().toList ).getOrElse( Nil )
   }
+
+  def cleanOutDir(): Unit = util.Arrays.stream(new File("src/resources/out/").listFiles()).forEach(f => f.delete())
 }

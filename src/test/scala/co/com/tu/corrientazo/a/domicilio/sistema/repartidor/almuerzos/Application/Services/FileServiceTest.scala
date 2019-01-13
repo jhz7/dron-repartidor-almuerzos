@@ -1,9 +1,14 @@
 package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
 
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Tools._
-import org.scalatest.{MustMatchers, WordSpecLike}
+import org.scalatest.{BeforeAndAfter, MustMatchers, WordSpecLike}
 
-class FileServiceTest extends MustMatchers with WordSpecLike {
+class FileServiceTest extends MustMatchers with WordSpecLike with BeforeAndAfter {
+
+  after {
+    println( "After Test" )
+    cleanOutDir()
+  }
 
   "FileService" should {
 
@@ -14,7 +19,7 @@ class FileServiceTest extends MustMatchers with WordSpecLike {
         "Then the file is created " in {
 
         val linesToWrite = List("Foo", "Bar", "Baz")
-        val idFile = "test"
+        val idFile = "test-file-service"
 
         FileService.writeLinesToFile( linesToWrite, idFile )
 
@@ -31,7 +36,7 @@ class FileServiceTest extends MustMatchers with WordSpecLike {
         "Then it must return lines readed" in {
 
         val linesExpected = List("Foo", "Bar", "Baz")
-        val idFile = "test"
+        val idFile = "test-file-service"
 
         val linesReaded = FileService.readLinesFromFile( idFile )
 
@@ -40,7 +45,7 @@ class FileServiceTest extends MustMatchers with WordSpecLike {
 
       "When starts to read a file " +
         "Where the file does not exists" +
-        "Then it must return aan empty list " in {
+        "Then it must return an empty list " in {
 
         val idFile = "not-exists"
 
