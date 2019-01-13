@@ -143,6 +143,29 @@ class LunchDeliveryServiceTest extends MustMatchers with WordSpecLike with Befor
 
         linesWroteInReports mustBe Nil
       }
+
+      "When starts to deliver lunches " +
+        "Where: " +
+        "- The first input file not exists " +
+        "- The second input file exists " +
+        "Then it must not generate a file report for the first file, but do for second one " in {
+
+        val idDrones = List( DroneIdentifier( id = "not-exists" ), DroneIdentifier( id = "test-lunch-service" ) )
+
+        val expectedLinesFromReportSecondFile = List(
+          "( -2, 4 ) dirección Norte",
+          "( -1, 3 ) dirección Sur",
+          "( 0, 0 ) dirección Oeste"
+        )
+
+        Await.result(LunchDeliveryService.startDeliveryLunches(idDrones).value.runAsync, Duration.Inf)
+
+        val linesWroteInReportFirstFile = readLinesFromFileInOutDir("not-exists")
+        val linesWroteInReportSecondFile = readLinesFromFileInOutDir("test-lunch-service")
+
+        linesWroteInReportFirstFile mustBe Nil
+        linesWroteInReportSecondFile mustBe expectedLinesFromReportSecondFile
+      }
     }
   }
 }
