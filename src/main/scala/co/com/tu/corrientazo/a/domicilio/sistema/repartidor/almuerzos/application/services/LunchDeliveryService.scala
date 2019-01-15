@@ -1,12 +1,12 @@
-package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
+package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.services
 
 import cats.data.EitherT
 import cats.implicits._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types.Types.{CustomEither, CustomEitherT}
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Services.PositionService
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.types.{CustomEither, CustomEitherT}
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.models._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.services.PositionService
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.types._
 import monix.eval.Task
 import monix.reactive.Observable
 

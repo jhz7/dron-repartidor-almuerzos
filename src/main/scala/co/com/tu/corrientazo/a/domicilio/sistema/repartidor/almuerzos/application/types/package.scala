@@ -1,10 +1,10 @@
-package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types
+package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application
 
 import cats.data.{EitherT, ValidatedNel}
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.models.ErrorMessage
 import monix.eval.Task
 
-object Types {
+package object types {
 
   type CustomEither[A] = Either[ErrorMessage, A]
 

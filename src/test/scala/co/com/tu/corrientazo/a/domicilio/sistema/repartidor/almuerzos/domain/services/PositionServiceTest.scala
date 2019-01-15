@@ -1,9 +1,9 @@
-package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Services
+package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.services
 
 import cats.implicits._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.Position
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types.NORTH
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.models.ErrorMessage
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.models.Position
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.types.NORTH
 import org.scalatest.{MustMatchers, WordSpecLike}
 
 class PositionServiceTest extends MustMatchers with WordSpecLike {

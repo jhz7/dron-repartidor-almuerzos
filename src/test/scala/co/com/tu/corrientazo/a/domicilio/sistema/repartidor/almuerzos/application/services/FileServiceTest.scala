@@ -1,6 +1,6 @@
-package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
+package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.services
 
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Tools._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.tools._
 import org.scalatest.{BeforeAndAfter, MustMatchers, WordSpecLike}
 
 class FileServiceTest extends MustMatchers with WordSpecLike with BeforeAndAfter {

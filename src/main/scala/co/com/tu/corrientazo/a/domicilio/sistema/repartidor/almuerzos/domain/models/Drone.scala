@@ -1,6 +1,6 @@
-package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models
+package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.models
 
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types.OrientationType
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.types.OrientationType
 
 final case class Drone( id: DroneIdentifier, currentPosition: Position )
 

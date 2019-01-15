@@ -3,13 +3,13 @@ package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos
 import java.util.concurrent.Executors
 
 import cats.implicits._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types.Types.{CustomEither, CustomValidated}
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.models.ErrorMessage
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.types.{CustomEither, CustomValidated}
 import monix.execution.ExecutionModel.AlwaysAsyncExecution
 import monix.execution.UncaughtExceptionReporter
 import monix.execution.schedulers.ExecutorScheduler
 
-package object Application {
+package object application {
 
   val lunchAmountPerTravel = 10
 

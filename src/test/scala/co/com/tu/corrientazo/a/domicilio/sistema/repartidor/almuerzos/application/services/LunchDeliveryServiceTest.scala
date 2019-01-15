@@ -1,11 +1,11 @@
-package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
+package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.services
 
 import cats.implicits._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Tools._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.executionScheduler
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.{DroneIdentifier, Position}
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types.{EAST, NORTH, SOUTH, WEST}
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.models.ErrorMessage
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.tools._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.executionScheduler
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.models.{DroneIdentifier, Position}
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.types.{EAST, NORTH, SOUTH, WEST}
 import org.scalatest.{BeforeAndAfter, MustMatchers, WordSpecLike}
 
 import scala.concurrent.Await

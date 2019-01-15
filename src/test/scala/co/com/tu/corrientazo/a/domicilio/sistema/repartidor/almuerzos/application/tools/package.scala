@@ -1,4 +1,4 @@
-package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application
+package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application
 
 import java.io.File
 import java.util
@@ -6,7 +6,7 @@ import java.util
 import scala.io.Source
 import scala.util.Try
 
-package object Tools {
+package object tools {
 
   def readLinesFromFileInOutDir( idFile: String ): List[String] = {
 

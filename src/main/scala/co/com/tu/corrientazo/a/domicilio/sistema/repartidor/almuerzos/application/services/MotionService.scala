@@ -1,10 +1,10 @@
-package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Services
+package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.services
 
 import cats.implicits._
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.Models.ErrorMessage
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Application.types.Types.CustomEither
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Models.Position
-import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.models.ErrorMessage
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.types.CustomEither
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.models.Position
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.types._
 
 object MotionService {
 

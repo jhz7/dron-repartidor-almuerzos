@@ -1,4 +1,4 @@
-package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.Domain.Types
+package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.types
 
 sealed trait MotionType
 
