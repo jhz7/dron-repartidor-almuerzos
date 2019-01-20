@@ -17,6 +17,13 @@ package object application {
 
   val rangeOfMotionInY: List[Int] = (-10 to 10).toList
 
+  object Result {
+
+    sealed trait Done
+
+    case object Done extends Done
+  }
+
   implicit val executionScheduler: ExecutorScheduler = ExecutorScheduler(
     Executors.newFixedThreadPool( 10 ),
     UncaughtExceptionReporter( t => println( s"this should not happen: ${t.getMessage}" ) ),

@@ -3,6 +3,7 @@ package co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.applicati
 import cats.data.EitherT
 import cats.implicits._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application._
+import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.Result._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.application.types.{CustomEither, CustomEitherT}
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.models._
 import co.com.tu.corrientazo.a.domicilio.sistema.repartidor.almuerzos.domain.services.PositionService
@@ -14,15 +15,15 @@ import scala.annotation.tailrec
 
 object LunchDeliveryService {
 
-  def startDeliveryLunches( idDrones: List[DroneIdentifier] ): CustomEitherT[List[Unit]] = {
+  def startDeliveryLunches( idDrones: List[DroneIdentifier] ): CustomEitherT[Done] = {
     EitherT {
       Observable.fromIterable( idDrones )
         .mapParallelUnordered( parallelism = 20 ){ idDrone => startDeliveryLunchesPerDrone( idDrone ).value }
-        .toListL.map( _.sequence )
+        .toListL.map( _.sequence.map( _ => Done ) )
     }
   }
 
-  private def startDeliveryLunchesPerDrone( idDrone: DroneIdentifier ): CustomEitherT[Unit] = {
+  private def startDeliveryLunchesPerDrone( idDrone: DroneIdentifier ): CustomEitherT[Done] = {
     EitherT {
       Task {
         val routes = FileService.readLinesFromFile( idDrone.id )
@@ -30,7 +31,7 @@ object LunchDeliveryService {
           .map( visitedPlaces => {
             val linesForReport = visitedPlaces.map( generateLineReportFromPosition )
             if ( linesForReport.nonEmpty ) FileService.writeLinesToFile( linesForReport, idDrone.id )
-            else ()
+            Done
           })
       }
     }
