@@ -1,7 +1,7 @@
 # Prueba técnica para el ingreso a S4N
 
-El objetivo de este repositorio no es que descarguen los funtes y los entreguen como si ustedes lo hubiesen hecho,
-por el contrario, el objetivo es que simplemente tomen esta base y entreguen algo mucho mejor.
+El objetivo de este repositorio no es que descarguen los funtes y los entreguen como si se tratase de su propio trabajo,
+por el contrario, el objetivo es que simplemente tomen esta base y entreguen un producto mejorado.
 
 ## Autor
 
