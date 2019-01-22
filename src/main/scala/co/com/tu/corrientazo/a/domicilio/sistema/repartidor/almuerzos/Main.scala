@@ -35,4 +35,6 @@ object Main extends App {
   val future = LunchDeliveryService.startDeliveryLunches( idDrones ).value.runAsync
 
   Await.result( future, Duration.Inf )
+
+  executionScheduler.shutdown()
 }
