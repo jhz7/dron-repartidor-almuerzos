@@ -65,19 +65,17 @@ object LunchDeliveryService {
   }
 
   private def deliverLunch( route: String, drone: Drone ): CustomEither[Position] = {
-    val motionList = route.toList
-    processDeliveryLunch( motionList, drone )
+    val motions = route.toList.map( MotionType(_) )
+    processDeliveryLunch( motions, drone )
   }
 
   @tailrec
-  private def processDeliveryLunch( route: List[Char], drone: Drone ): CustomEither[Position] =
-    route match {
+  private def processDeliveryLunch( motions: List[MotionType], drone: Drone ): CustomEither[Position] =
+    motions match {
       case Nil     => drone.currentPosition.asRight
       case x :: xs =>
-        val motion = MotionType( x )
-
         val validatedPosition = for {
-          newPosition <- MotionService.makeAMotion( motion, drone.currentPosition )
+          newPosition <- MotionService.makeAMotion( x, drone.currentPosition )
           _ <- PositionService.validatePosition( newPosition )
         } yield newPosition
 
