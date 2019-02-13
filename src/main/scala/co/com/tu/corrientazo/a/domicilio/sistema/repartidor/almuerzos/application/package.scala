@@ -30,7 +30,7 @@ package object application {
     AlwaysAsyncExecution
   )
 
-  implicit class CastFromValidatedNelToEither[A <: Any]( validatedNel: CustomValidated[A] ) {
+  implicit class CastFromValidatedNelToEither[A <: Any]( val validatedNel: CustomValidated[A] ) extends AnyVal {
     def toCustomEither: CustomEither[A] = validatedNel.fold(
       errors => generateUniqueErrorMessage( errors.toList ).asLeft,
       data => data.asRight
