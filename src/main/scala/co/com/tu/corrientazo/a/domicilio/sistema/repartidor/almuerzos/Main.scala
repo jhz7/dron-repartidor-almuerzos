@@ -32,9 +32,13 @@ object Main extends App {
     DroneIdentifier( id = "20" )
   )
 
+  println("Ejecutando operacion de entrega de pedidos...")
+
   val future = LunchDeliveryService.startDeliveryLunches( idDrones ).value.runAsync
 
   Await.result( future, Duration.Inf )
+
+  println("Entrega finalizada...")
 
   executionScheduler.shutdown()
 }
